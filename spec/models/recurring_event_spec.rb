@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe RecurringEvent, type: :model do
   include ActiveSupport::Testing::TimeHelpers
 
-  describe '.create_next_event' do
+  describe '.next_event' do
     subject { FactoryBot.create(:recurring_event, week_day: :monday) }
     let(:a_tuesday) { Date.new(2022, 11, 22) }
     let(:next_monday) { Date.new(2022, 11, 28) }
@@ -11,24 +11,24 @@ RSpec.describe RecurringEvent, type: :model do
       let!(:event) { FactoryBot.create(:event, recurring_event: subject, date: next_monday) }
       it 'returns the alreay created event' do
         travel_to a_tuesday do
-          expect(subject.create_next_event).to eq(event)
+          expect(subject.next_event).to eq(event)
         end
       end
       it 'does not create an event' do
         travel_to a_tuesday do
-          expect { subject.create_next_event }.to_not change { Event.count }
+          expect { subject.next_event }.to_not change { Event.count }
         end
       end
     end
     describe 'when there is no upcoming event' do
       it 'returns a new event for the next date' do
         travel_to a_tuesday do
-          expect(subject.create_next_event.date).to eq(next_monday)
+          expect(subject.next_event.date).to eq(next_monday)
         end
       end
       it 'Creats an event' do
         travel_to a_tuesday do
-          expect { subject.create_next_event }.to change { Event.count }.by(1)
+          expect { subject.next_event }.to change { Event.count }.by(1)
         end
       end
     end

@@ -5,7 +5,7 @@ class RecurringEvent < ApplicationRecord
   has_many :events
   enum :week_day, %i[sunday monday tuesday wednesday thursday friday saturday]
 
-  def create_next_event
+  def next_event
     next_event = events.find_by(date: next_date)
     return next_event if next_event
 
