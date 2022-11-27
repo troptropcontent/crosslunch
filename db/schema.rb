@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_120006) do
 
   create_table "events", force: :cascade do |t|
     t.bigint "recurring_event_id", null: false
-    t.date "date", null: false
+    t.datetime "happens_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["recurring_event_id"], name: "index_events_on_recurring_event_id"
@@ -64,8 +64,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_120006) do
 
   create_table "recurring_events", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "week_day", null: false
-    t.time "hour", null: false
+    t.integer "weekday", null: false
+    t.time "time", null: false
     t.integer "group_size", null: false
     t.bigint "company_id", null: false
     t.datetime "created_at", null: false
