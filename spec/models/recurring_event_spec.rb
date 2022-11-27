@@ -1,55 +1,99 @@
 require 'rails_helper'
-
+require 'support/shared_context/dates'
 RSpec.describe RecurringEvent, type: :model do
   include ActiveSupport::Testing::TimeHelpers
+  include_context 'dates'
 
   describe '.next_event' do
-    subject { FactoryBot.create(:recurring_event, week_day: :monday) }
-    let(:a_tuesday) { Date.new(2022, 11, 22) }
-    let(:next_monday) { Date.new(2022, 11, 28) }
-    describe 'when a event already exists' do
-      let!(:event) { FactoryBot.create(:event, recurring_event: subject, date: next_monday) }
-      it 'returns the alreay created event' do
-        travel_to a_tuesday do
-          expect(subject.next_event).to eq(event)
+    subject { FactoryBot.create(:recurring_event, weekday: :monday) }
+
+    describe 'when the event is happening today' do
+      describe 'when an event already exists' do
+        let!(:event) { FactoryBot.create(:event, recurring_event: subject, happens_at: monday) }
+        it 'returns the event that is happening today' do
+          travel_to monday do
+            expect(subject.next_event.happens_at).to eq(monday)
+          end
+        end
+        it 'does not create an event' do
+          travel_to monday do
+            expect { subject.next_event }.not_to change(Event, :count)
+          end
         end
       end
-      it 'does not create an event' do
-        travel_to a_tuesday do
-          expect { subject.next_event }.to_not change { Event.count }
+      describe 'when an event does not already exists' do
+        it 'returns the event that is happening today' do
+          travel_to monday do
+            expect(subject.next_event.happens_at).to eq(monday)
+          end
+        end
+        it 'creates an event' do
+          travel_to monday do
+            expect { subject.next_event }.to change(Event, :count).by(1)
+          end
         end
       end
     end
-    describe 'when there is no upcoming event' do
-      it 'returns a new event for the next date' do
-        travel_to a_tuesday do
-          expect(subject.next_event.date).to eq(next_monday)
+    describe 'when the event is not happening today' do
+      describe 'when an event already exists' do
+        let!(:event) { FactoryBot.create(:event, recurring_event: subject, happens_at: next_monday) }
+        it 'returns the next event' do
+          travel_to tuesday do
+            expect(subject.next_event.happens_at).to eq(next_monday)
+          end
+        end
+        it 'does not create an event' do
+          travel_to tuesday do
+            expect { subject.next_event }.not_to change(Event, :count)
+          end
         end
       end
-      it 'Creats an event' do
-        travel_to a_tuesday do
-          expect { subject.next_event }.to change { Event.count }.by(1)
+      describe 'when an event does not already exists' do
+        it 'returns the next event' do
+          travel_to tuesday do
+            expect(subject.next_event.happens_at).to eq(next_monday)
+          end
+        end
+        it 'creates an event' do
+          travel_to tuesday do
+            expect { subject.next_event }.to change(Event, :count).by(1)
+          end
         end
       end
     end
   end
 
   describe '.next_date' do
-    subject { FactoryBot.build(:recurring_event, week_day: :monday) }
-    let(:a_monday) { Date.new(2022, 11, 21) }
-    let(:a_tuesday) { Date.new(2022, 11, 22) }
-    let(:next_monday) { Date.new(2022, 11, 28) }
-    describe 'when today is the week_day' do
-      it 'returns the next occuring week_day' do
-        travel_to a_monday do
+    subject { FactoryBot.build(:recurring_event, weekday: :monday) }
+    describe 'when the recuring_event weekday is today' do
+      it "returns today's date" do
+        travel_to monday do
+          expect(subject.next_date).to eq(monday)
+        end
+      end
+    end
+    describe 'when the recuring_event weekday is not today' do
+      it "returns next occuring weekday's date" do
+        travel_to tuesday do
           expect(subject.next_date).to eq(next_monday)
         end
       end
     end
-    describe 'when today is not the week_day' do
-      it 'returns the next occuring week_day' do
-        travel_to a_tuesday do
-          expect(subject.next_date).to eq(next_monday)
+  end
+
+  describe '.happening_today?' do
+    subject { FactoryBot.build(:recurring_event, weekday: :monday) }
+    context 'when the event is happening today' do
+      it 'returns true' do
+        travel_to monday do
+          expect(subject.happening_today?).to be true
+        end
+      end
+    end
+    context 'when the event is not happening today' do
+      it 'returns false' do
+        travel_to tuesday do
+          expect(subject.happening_today?).to be false
         end
       end
     end
