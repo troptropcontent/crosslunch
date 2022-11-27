@@ -1,0 +1,6 @@
+en:
+  participations:
+    create:
+      button_text: "Présent"
+    destroy:
+      button_text: "Annuler"

@@ -1,0 +1,8 @@
+en:
+  recurring_events:
+    show:
+      next_recurring_event: "Prochaine date"
+      participations_count:
+        zero: "Pas de participants"
+        one: "1 personne inscrite"
+        other: "%{count} personnes inscrites"

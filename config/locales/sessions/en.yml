@@ -1,0 +1,13 @@
+en:
+  sessions:
+    new:
+      title: "Qui es tu ?"
+      form:
+        first_name:
+          label: "Prénom :"
+          placeholder: "Ton prénom"
+        last_name:
+          label: "Nom de famille :"
+          placeholder: "Ton nom de famille"
+        submit:
+          text: "Continuer"
