@@ -1,15 +1,19 @@
+require 'active_support/testing/time_helpers'
 class RecurringEventsController < ApplicationController
   before_action :authenticate_employee
   before_action :require_subdomain
   before_action :load_company
   before_action :load_recurring_event
+  include ActiveSupport::Testing::TimeHelpers
   def show
-    actor = RecurringEvents::FindViewAndEvent.call(employee: current_employee,
-                                                   recurring_event: @recurring_event)
-    if actor.view == :current_event
-      render_current_event_view(actor)
-    else
-      render_upcoming_event_view(actor)
+    travel_to Time.current + 2.hours do
+      actor = RecurringEvents::FindViewAndEvent.call(employee: current_employee,
+                                                     recurring_event: @recurring_event)
+      if actor.view == :current_event
+        render_current_event_view(actor)
+      else
+        render_upcoming_event_view(actor)
+      end
     end
   end
 
@@ -19,8 +23,9 @@ class RecurringEventsController < ApplicationController
     @recurring_event = @company.recurring_event
   end
 
-  def render_current_event_view(_actor)
+  def render_current_event_view(actor)
     # TO DO
+    @event = actor.event
 
     render :current_event
   end

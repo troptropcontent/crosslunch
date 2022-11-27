@@ -1,0 +1,7 @@
+<div class="grow flex flex-col items-center justify-center gap-4">
+  <% if @event.groups_done %>
+    
+    <% else %>
+    <%= render 'events/groups_not_ready' %>
+  <% end %>
+</div>

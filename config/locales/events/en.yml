@@ -1,0 +1,6 @@
+en:
+  events:
+    views:
+      groups_not_ready:
+        title: "Les groupes sont en train d'être constitué"
+        sub_title: "Ils seront disponibles dans quelques instants"
