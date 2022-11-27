@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_24_120006) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_27_141603) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_120006) do
     t.datetime "happens_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "groups_done", default: false, null: false
     t.index ["recurring_event_id"], name: "index_events_on_recurring_event_id"
   end
 
