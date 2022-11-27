@@ -76,3 +76,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+
+gem "service_actor", "~> 3.4"
+
+gem "service_actor-rails", "~> 1.0"
