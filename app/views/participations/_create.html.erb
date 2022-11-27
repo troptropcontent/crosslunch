@@ -1,0 +1,7 @@
+<%= form_for event.participations.new(employee: employee), html:{:class => 'grow flex flex-col'} do |f| %>
+    <div class="rounded-md text-center grow flex flex-col justify-center items-center"> 
+            <%= f.hidden_field :employee_id %>
+            <%= f.hidden_field :event_id %>
+            <%= f.button t('participations.create.button_text'), type: :submit, class: "w-full rounded-md grow bg-green-400 text-white font-bold grow" %>
+    </div>
+<% end %>

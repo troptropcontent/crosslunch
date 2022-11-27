@@ -1,0 +1,6 @@
+<%= form_for participation, method: :delete, html:{:class => 'grow flex flex-col'}  do |f| %>
+    <div class="rounded-md text-center grow flex flex-col justify-center items-center"> 
+            <%= f.hidden_field :employee_id %>
+            <%= f.button t('participations.destroy.button_text'), type: :submit, class: "w-full rounded-md grow bg-red-400 text-white font-bold grow" %>
+    </div>
+<% end %>

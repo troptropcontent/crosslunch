@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="bg-sky-50 h-screen flex flex-col">
   <head>
     <title>Crosslunch</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,8 +11,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class='grow flex p-12'>
+    <main class="container p-8 grow flex flex-col bg-white rounded-md shadow-md">
       <%= yield %>
     </main>
   </body>
