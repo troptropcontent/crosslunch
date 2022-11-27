@@ -3,10 +3,12 @@
     <h1 class="font-bold text-4xl text-center"><%= @recurring_event.name.upcase_first %></h1>
     <h3 class="font-bold text-xl text-center"><%= t('recurring_events.show.next_recurring_event') %></h3>
     <h1 class="font-bold text-4xl text-center"><%= @event.happens_at %></h1>
-    <h3 class="font-bold text-xl text-center"><%= t('recurring_events.show.participations_count', count: @participations_count) %></h3>
+    <%= turbo_stream_from "participations_count_event_#{@event.id}" %>
+    <%= render 'participations/count', count: @participations_count, event: @event %>
   </div>
+  
   <% if @participation %>
-      <%= render 'participations/destroy', participation: @participation %>
+      <%= render 'participations/destroy', participation: @participation, event: @event %>
     <% else %>
       <%= render 'participations/create', employee: @employee, event: @event %>
   <% end %>

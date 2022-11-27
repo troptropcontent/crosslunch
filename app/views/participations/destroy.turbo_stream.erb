@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@participation.event, 'participation_form'), partial: "participations/create", locals: { employee: @participation.employee, event: @participation.event } %>
+<%= turbo_stream.replace dom_id(@participation.event, 'participations_count'), partial: "participations/count", locals: { event: @participation.event, count: @participation.event.participations.count } %>
+

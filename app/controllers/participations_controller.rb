@@ -3,14 +3,21 @@ class ParticipationsController < ApplicationController
   before_action :require_subdomain
   def create
     @participation = Participation.create(participation_param)
-    redirect_to root_path
+
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.turbo_stream
+    end
   end
 
   def destroy
     @participation = Participation.find(params[:id])
     @participation.destroy
 
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.turbo_stream
+    end
   end
 
   private
