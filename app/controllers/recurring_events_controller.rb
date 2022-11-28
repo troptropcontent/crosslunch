@@ -26,6 +26,7 @@ class RecurringEventsController < ApplicationController
     @event = actor.event
     @group = current_employee.group_for(@event)
     @other_participants = @group.participations.where.not(employee: current_employee).extract_associated(:employee)
+    @channel = @group.channel || @group.create_channel
     render :current_event
   end
 

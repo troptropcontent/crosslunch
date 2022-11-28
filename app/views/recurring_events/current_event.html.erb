@@ -1,6 +1,6 @@
 <div class="grow flex flex-col items-center justify-center gap-4">
   <% if @event.groups_done %>
-    <%= render 'events/groups_done', group: @group %>
+    <%= render 'events/groups_done', group: @group, channel: @channel %>
     <% else %>
     <%= render 'events/groups_not_ready' %>
   <% end %>

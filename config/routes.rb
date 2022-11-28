@@ -14,5 +14,7 @@ Rails.application.routes.draw do
     post 'login', to: 'sessions#create'
     root 'recurring_events#show'
     resources :participations, only: %i[create destroy]
+    resources :channels, only: :show
+    resources :messages, only: :create
   end
 end
