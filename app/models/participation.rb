@@ -2,6 +2,8 @@ class Participation < ApplicationRecord
   after_commit :broad_cast_new_participations_count, on: %i[create destroy]
   belongs_to :employee
   belongs_to :event
+  has_one :groups_participation
+  has_one :group, through: :groups_participation
 
   private
 
