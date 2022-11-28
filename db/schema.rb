@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_27_141603) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_125346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "channels", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_channels_on_group_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name", null: false
@@ -54,6 +61,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_141603) do
     t.index ["participation_id"], name: "index_groups_participations_on_participation_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.bigint "channel_id", null: false
+    t.bigint "employee_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["channel_id"], name: "index_messages_on_channel_id"
+    t.index ["employee_id"], name: "index_messages_on_employee_id"
+  end
+
   create_table "participations", force: :cascade do |t|
     t.bigint "employee_id", null: false
     t.bigint "event_id", null: false
@@ -74,11 +91,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_141603) do
     t.index ["company_id"], name: "index_recurring_events_on_company_id"
   end
 
+  add_foreign_key "channels", "groups"
   add_foreign_key "employees", "companies"
   add_foreign_key "events", "recurring_events"
   add_foreign_key "groups", "events"
   add_foreign_key "groups_participations", "groups"
   add_foreign_key "groups_participations", "participations"
+  add_foreign_key "messages", "channels"
+  add_foreign_key "messages", "employees"
   add_foreign_key "participations", "employees"
   add_foreign_key "participations", "events"
   add_foreign_key "recurring_events", "companies"
