@@ -1,0 +1,8 @@
+en:
+  channels:
+    views:
+      show:
+        new_message:
+          form:
+            content:
+              placeholder: "Votre message"
