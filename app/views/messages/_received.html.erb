@@ -1,0 +1,7 @@
+<div class='flex'>
+    <div class="bg-white w-fit px-4 py-2 rounded-t-xl rounded-br-xl shadow-md">
+        <p class='text-xs'><%= full_name(message.employee) %></p>
+        <p><%= message.content %></p>
+        <p class='text-xs text-right text-slate-400' ><%= l message.created_at, format: :short %></p>
+    </div>
+</div>

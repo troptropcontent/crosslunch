@@ -9,6 +9,6 @@ class ChannelsController < ApplicationController
     @recurring_event = @event.recurring_event
     @messages = @channel.messages
     @employee = current_employee
-    @message = @channel.messages.new(employee: @employee)
+    @message = Message.new(channel: @channel, employee: @employee)
   end
 end

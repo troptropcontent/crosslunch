@@ -5,14 +5,19 @@
       <p class='text-xs'><%= @event.happens_at.to_date %></p>
     </div>
     <div class="flex flex-col justify-center">
-      
       <%= link_to root_path do %>
         <%= inline_svg_tag('icons/x.svg') %>
       <% end %>
     </div>
   </div>
-  <div id='messages' class="grow h-8 overflow-scroll m-4">
-    
+  <div id='messages' class="grow flex flex-col gap-2 h-8 overflow-scroll m-4">
+    <% @messages.each do |message| %>
+      <% if message.employee_id == @employee.id %>
+          <%= render 'messages/sent', message: message %>
+        <% else %>
+          <%= render 'messages/received', message: message %>
+      <% end %> 
+    <% end %>
   </div>
   <div id='new_message' class="mx-4 px-4 bg-white rounded-3xl mb-4 p-2">
     <%= form_for @message, html: {class: 'flex justify-between gap-4'} do |f| %>
