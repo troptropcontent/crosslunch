@@ -4,3 +4,6 @@ en:
       groups_not_ready:
         title: "Les groupes sont en train d'être constitué"
         sub_title: "Ils seront disponibles dans quelques instants"
+      groups_done:
+        title: "Voici les autres personnes de ton groupe"
+        sub_title: "Pour vous organiser vous pouvez utiliser le chat"
