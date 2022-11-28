@@ -1,4 +1,7 @@
+require 'active_support/testing/time_helpers'
 class ApplicationController < ActionController::Base
+  include ActiveSupport::Testing::TimeHelpers
+  around_action :freeze_time_on
   helper_method :require_subdomain
   helper_method :load_company
   helper_method :authenticate_employee
@@ -32,5 +35,11 @@ class ApplicationController < ActionController::Base
 
   def authenticate_employee
     redirect_to '/login' unless logged_in?
+  end
+
+  def freeze_time_on(&block)
+    return unless Rails.env.development? && ENV['FREEZE_TIME_ON']
+
+    travel_to DateTime.parse(ENV['FREEZE_TIME_ON']), &block
   end
 end
