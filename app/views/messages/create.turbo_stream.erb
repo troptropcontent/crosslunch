@@ -1,0 +1,6 @@
+<%= turbo_stream.after   "new_message" do %>
+  <%= render @message, employee: @message.employee %>
+<% end %>
+<%= turbo_stream.update dom_id(Message.new, :form) do %>
+  <%= render "messages/form", message: @new_message %>
+<% end %>

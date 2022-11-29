@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   end
 
   def freeze_time_on(&block)
-    return unless Rails.env.development? && ENV['FREEZE_TIME_ON']
+    return yield unless Rails.env.development? && ENV['FREEZE_TIME_ON']
 
     travel_to DateTime.parse(ENV['FREEZE_TIME_ON']), &block
   end

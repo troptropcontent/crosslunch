@@ -1,0 +1,13 @@
+<%= form_for message, html: {class: 'flex justify-between gap-4'}, data: { turbo_frame: 'new_message' } do |f| %>
+    <%= f.text_field( 
+    :content, 
+    class: 'grow border-none', 
+    placeholder: t("channels.views.show.new_message.form.content.placeholder") 
+    )%>
+    <%= f.hidden_field :channel_id %>
+    <%= f.hidden_field :employee_id %>
+    
+    <%= f.button nil, class: "button_green" do %>
+        <%= inline_svg_tag('icons/send.svg', class: 'text-slate-500') %>
+    <% end %>
+<% end %>

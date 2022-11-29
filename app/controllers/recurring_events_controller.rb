@@ -1,10 +1,9 @@
-require 'active_support/testing/time_helpers'
 class RecurringEventsController < ApplicationController
   before_action :authenticate_employee
   before_action :require_subdomain
   before_action :load_company
   before_action :load_recurring_event
-  include ActiveSupport::Testing::TimeHelpers
+
   def show
     actor = RecurringEvents::FindViewAndEvent.call(employee: current_employee,
                                                    recurring_event: @recurring_event)

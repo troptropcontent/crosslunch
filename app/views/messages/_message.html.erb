@@ -1,0 +1,7 @@
+<%= turbo_frame_tag message do %>
+    <% if message.employee_id == employee.id %>
+        <%= render 'messages/sent', message: message %>
+    <% else %>
+        <%= render 'messages/received', message: message %>
+    <% end %>
+<% end %>

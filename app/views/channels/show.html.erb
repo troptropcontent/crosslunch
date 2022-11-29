@@ -10,27 +10,14 @@
       <% end %>
     </div>
   </div>
+  <%= turbo_stream_from dom_id(@channel, :messages) %>
   <div id='messages' class="grow overflow-scroll flex flex-col-reverse gap-2 h-8  m-4">
-    <% @messages.each do |message| %>
-      <% if message.employee_id == @employee.id %>
-          <%= render 'messages/sent', message: message %>
-        <% else %>
-          <%= render 'messages/received', message: message %>
-      <% end %> 
-    <% end %>
+      <%= turbo_frame_tag 'new_message' %>
+      <%= render @messages, employee: @employee %>
   </div>
   <div id='new_message' class="mx-4 px-4 bg-white rounded-3xl mb-4 p-2">
-    <%= form_for @message, html: {class: 'flex justify-between gap-4'} do |f| %>
-      <%= f.text_field( 
-        :content, 
-        class: 'grow border-none', 
-        placeholder: t("channels.views.show.new_message.form.content.placeholder") 
-      )%>
-      <%= f.hidden_field :channel_id %>
-      <%= f.hidden_field :employee_id %>
-      <%= f.button nil, class: "button_green" do %>
-          <%= inline_svg_tag('icons/send.svg', class: 'text-slate-500') %>
-      <% end %>
+    <%= turbo_frame_tag dom_id(@message, :form) do %>
+      <%= render "messages/form", message: @message %>
     <% end %>
   </div>
 </div>
