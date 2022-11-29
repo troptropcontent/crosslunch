@@ -10,7 +10,7 @@
       <% end %>
     </div>
   </div>
-  <div id='messages' class="grow flex flex-col gap-2 h-8 overflow-scroll m-4">
+  <div id='messages' class="grow overflow-scroll flex flex-col-reverse gap-2 h-8  m-4">
     <% @messages.each do |message| %>
       <% if message.employee_id == @employee.id %>
           <%= render 'messages/sent', message: message %>
