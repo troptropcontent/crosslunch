@@ -5,5 +5,5 @@ en:
         title: "Les groupes sont en train d'être constitué"
         sub_title: "Ils seront disponibles dans quelques instants"
       groups_done:
-        title: "Voici les autres personnes de ton groupe"
-        sub_title: "Pour vous organiser vous pouvez utiliser le chat"
+        title: "Voici ton groupe"
+        sub_title: "Vous pouvez utiliser le chat pour vous organiser"
