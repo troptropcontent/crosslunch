@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   class Subdomain
     def self.matches?(request)
       request.subdomain.present? && request.subdomain != 'www'
