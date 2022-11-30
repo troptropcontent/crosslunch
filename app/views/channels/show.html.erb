@@ -10,10 +10,14 @@
       <% end %>
     </div>
   </div>
-  <%= turbo_stream_from dom_id(@channel, :messages) %>
+  <%= turbo_stream_from "channel_#{@channel.id}_messages_employee_#{@employee.id}" %>
   <div id='messages' class="grow overflow-scroll flex flex-col-reverse gap-2 h-8  m-4">
       <%= turbo_frame_tag 'new_message' %>
-      <%= render @messages, employee: @employee %>
+      
+      <% @messages.each do |message| %>
+        <%= render message, sent: @employee.id == message.employee_id %>
+      <% end %>
+      
   </div>
   <div id='new_message' class="mx-4 px-4 bg-white rounded-3xl mb-4 p-2">
     <%= turbo_frame_tag dom_id(@message, :form) do %>
