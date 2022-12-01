@@ -1,6 +1,9 @@
 class Employee < ApplicationRecord
   belongs_to :company
   has_many :participations
+  belongs_to :user
+  delegate :first_name, to: :user
+  delegate :last_name, to: :user
 
   def participates_to?(event)
     Participation.exists?(event: event, employee_id: id)

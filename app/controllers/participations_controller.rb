@@ -1,6 +1,5 @@
 class ParticipationsController < ApplicationController
-  before_action :authenticate_employee
-  before_action :require_subdomain
+  include CompanyController
   def create
     @participation = Participation.create(participation_param)
 

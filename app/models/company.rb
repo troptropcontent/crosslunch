@@ -4,4 +4,5 @@ class Company < ApplicationRecord
 
   has_one :recurring_event
   has_many :employees
+  has_many :users, through: :employees
 end

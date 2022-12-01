@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_30_073551) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_30_211514) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,11 +29,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_073551) do
 
   create_table "employees", force: :cascade do |t|
     t.bigint "company_id", null: false
-    t.string "first_name", null: false
-    t.string "last_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["company_id"], name: "index_employees_on_company_id"
+    t.index ["user_id"], name: "index_employees_on_user_id"
+  end
+
+  create_table "employees_users", force: :cascade do |t|
+    t.bigint "employee_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_employees_users_on_employee_id"
+    t.index ["user_id"], name: "index_employees_users_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -99,12 +108,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_073551) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "last_name", null: false
+    t.string "first_name", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "channels", "groups"
   add_foreign_key "employees", "companies"
+  add_foreign_key "employees", "users"
+  add_foreign_key "employees_users", "employees"
+  add_foreign_key "employees_users", "users"
   add_foreign_key "events", "recurring_events"
   add_foreign_key "groups", "events"
   add_foreign_key "groups_participations", "groups"

@@ -1,7 +1,5 @@
 class RecurringEventsController < ApplicationController
-  before_action :authenticate_employee
-  before_action :require_subdomain
-  before_action :load_company
+  include CompanyController
   before_action :load_recurring_event
 
   def show

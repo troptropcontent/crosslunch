@@ -1,7 +1,5 @@
 class ChannelsController < ApplicationController
-  before_action :authenticate_employee
-  before_action :require_subdomain
-  before_action :load_company
+  include CompanyController
   # GET  /channel/:id
   def show
     @channel = Channel.find(params[:id])

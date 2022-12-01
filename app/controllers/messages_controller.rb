@@ -1,4 +1,5 @@
 class MessagesController < ApplicationController
+  include CompanyController
   def create
     @message = Message.new(message_params)
     @channel = @message.channel
