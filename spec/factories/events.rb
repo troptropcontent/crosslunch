@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :event do
     recurring_event
-    happens_at { '2022-11-24 12:30:00' }
+    happens_at { Date.today.midday }
   end
 end

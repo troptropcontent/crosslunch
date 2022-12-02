@@ -10,14 +10,14 @@
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
     <% if @current_employee %>  
       <style>
-        [data-hide-from-employee="51"] {
-            display: none;
+        [data-hide-from-employe="<%= @current_employee.id %>"] {
+        display: none;
         }
       </style>
     <% end %>
-    <%= javascript_importmap_tags %>
   </head>
 
   <body class='grow flex p-12'>
