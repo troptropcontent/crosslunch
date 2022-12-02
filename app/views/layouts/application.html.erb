@@ -6,17 +6,17 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     
-    <% if @current_employee %>  
-      <style>
-        [hide-from-employee=<%= @current_employee.id %>] {
-        display: none;
-        }
-      </style>
-    <% end %>
     
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <% if @current_employee %>  
+      <style>
+        [data-hide-from-employee="51"] {
+            display: none;
+        }
+      </style>
+    <% end %>
     <%= javascript_importmap_tags %>
   </head>
 
