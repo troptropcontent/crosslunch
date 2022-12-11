@@ -15,16 +15,20 @@ class RecurringEventsController < ApplicationController
   private
 
   def load_recurring_event
-    @recurring_event = @company.recurring_event
+    @recurring_event = RecurringEvent.find_by!(company: @company)
   end
 
   def render_current_event_view(actor)
     # TO DO
     @event = actor.event
     @group = current_employee.group_for(@event)
-    @other_participants = @group.participations.where.not(employee: current_employee).extract_associated(:employee)
-    @channel = @group.channel || @group.create_channel
-    render :current_event
+    if @group
+      @other_participants = Employee.joins(:groups).where(groups: { id: @group.id }).where.not(id: current_employee.id).distinct
+      @channel = Channel.find_or_create_by(group: @group)
+      render 'events/show/groups_done'
+    else
+      render 'events/show/groups_not_ready'
+    end
   end
 
   def render_upcoming_event_view(actor)

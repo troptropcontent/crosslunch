@@ -1,2 +1,2 @@
-web: FREEZE_TIME_ON="2022-11-28 12:00:00 UTC" bin/rails server -p 3000
+web: FREEZE_TIME_ON="2022-12-05 12:00:00 UTC" bin/rails server -p 3000
 css: bin/rails tailwindcss:watch

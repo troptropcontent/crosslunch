@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   constraints Subdomain do
     devise_for :users
     root 'recurring_events#show'
+    resource :recurring_event, only: :show
     resources :participations, only: %i[create destroy]
     resources :channels, only: :show
     resources :messages, only: :create
