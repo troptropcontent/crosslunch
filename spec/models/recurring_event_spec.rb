@@ -9,55 +9,43 @@ RSpec.describe RecurringEvent, type: :model do
 
     describe 'when the event is happening today' do
       describe 'when an event already exists' do
+        let(:today) { monday }
         let!(:event) { FactoryBot.create(:event, recurring_event: subject, happens_at: monday) }
         it 'returns the event that is happening today' do
-          travel_to monday do
-            expect(subject.next_event.happens_at).to eq(monday)
-          end
+          expect(subject.next_event.happens_at).to eq(monday)
         end
         it 'does not create an event' do
-          travel_to monday do
-            expect { subject.next_event }.not_to change(Event, :count)
-          end
+          expect { subject.next_event }.not_to change(Event, :count)
         end
       end
       describe 'when an event does not already exists' do
+        let(:today) { monday }
         it 'returns the event that is happening today' do
-          travel_to monday do
-            expect(subject.next_event.happens_at).to eq(monday)
-          end
+          expect(subject.next_event.happens_at).to eq(monday)
         end
         it 'creates an event' do
-          travel_to monday do
-            expect { subject.next_event }.to change(Event, :count).by(1)
-          end
+          expect { subject.next_event }.to change(Event, :count).by(1)
         end
       end
     end
     describe 'when the event is not happening today' do
       describe 'when an event already exists' do
         let!(:event) { FactoryBot.create(:event, recurring_event: subject, happens_at: next_monday) }
+        let(:today) { tuesday }
         it 'returns the next event' do
-          travel_to tuesday do
-            expect(subject.next_event.happens_at).to eq(next_monday)
-          end
+          expect(subject.next_event.happens_at).to eq(next_monday)
         end
         it 'does not create an event' do
-          travel_to tuesday do
-            expect { subject.next_event }.not_to change(Event, :count)
-          end
+          expect { subject.next_event }.not_to change(Event, :count)
         end
       end
       describe 'when an event does not already exists' do
+        let(:today) { tuesday }
         it 'returns the next event' do
-          travel_to tuesday do
-            expect(subject.next_event.happens_at).to eq(next_monday)
-          end
+          expect(subject.next_event.happens_at).to eq(next_monday)
         end
         it 'creates an event' do
-          travel_to tuesday do
-            expect { subject.next_event }.to change(Event, :count).by(1)
-          end
+          expect { subject.next_event }.to change(Event, :count).by(1)
         end
       end
     end
@@ -66,35 +54,31 @@ RSpec.describe RecurringEvent, type: :model do
   describe '.next_date' do
     subject { FactoryBot.build(:recurring_event, weekday: :monday) }
     describe 'when the recuring_event weekday is today' do
+      let(:today) { monday }
       it "returns today's date" do
-        travel_to monday do
-          expect(subject.next_date).to eq(monday)
-        end
+        expect(subject.next_date).to eq(monday)
       end
     end
     describe 'when the recuring_event weekday is not today' do
+      let(:today) { tuesday }
       it "returns next occuring weekday's date" do
-        travel_to tuesday do
-          expect(subject.next_date).to eq(next_monday)
-        end
+        expect(subject.next_date).to eq(next_monday)
       end
     end
   end
 
   describe '.happening_today?' do
     subject { FactoryBot.build(:recurring_event, weekday: :monday) }
+    let(:today) { monday }
     context 'when the event is happening today' do
       it 'returns true' do
-        travel_to monday do
-          expect(subject.happening_today?).to be true
-        end
+        expect(subject.happening_today?).to be true
       end
     end
     context 'when the event is not happening today' do
+      let(:today) { tuesday }
       it 'returns false' do
-        travel_to tuesday do
-          expect(subject.happening_today?).to be false
-        end
+        expect(subject.happening_today?).to be false
       end
     end
   end
